@@ -45,19 +45,20 @@ const Home = () => {
               <td>{item.name}</td>
               <td>{item.email}</td>
               <td>{item.contact}</td>
-              <Link to={`/update/${item.id}`}>
-                <button className="btn btn-secondary">edit</button>
-              </Link>
-              <button
-                className="btn btn-warning"
-                onClick={() => onDeleteUser(item.id)}
-              >
-                Delete
-              </button>
-              {/* </Link> */}
-              <Link to={`/view/${item.id}`}>
-                <button className="btn btn-primary">view</button>
-              </Link>
+              <td>
+                <Link to={`/update/${item.id}`}>
+                  <button className="btn btn-secondary">edit</button>
+                </Link>
+                <button
+                  className="btn btn-warning"
+                  onClick={() => onDeleteUser(item.id)}
+                >
+                  Delete
+                </button>
+                <Link to={`/view/${item.id}`}>
+                  <button className="btn btn-primary">view</button>
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

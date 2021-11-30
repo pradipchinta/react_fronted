@@ -25,9 +25,8 @@ const updateUser = async (data, id) => {
 const AddEdit = () => {
   const history = useNavigate();
   const { id } = useParams();
-  const [state, setstate] = useState(initialState);
+  const [data, setData] = useState(initialState);
   const { name, email, contact } = initialState;
-
   useEffect(() => {
     if (id) {
       getSingleUser(id);
@@ -35,9 +34,9 @@ const AddEdit = () => {
   }, [id]);
 
   const getSingleUser = async (id) => {
-    const response = await axios.post(`http://localhost:5000/user/${id}`);
+    const response = await axios.get(`http://localhost:5000/user/${id}`);
     if (response.status === 200) {
-      setstate({ ...response.data[0] });
+      setData({ ...response.data[0] });
     }
   };
 
@@ -47,17 +46,16 @@ const AddEdit = () => {
       toast.error("please provide value");
     } else {
       if (!id) {
-        addUser(state);
+        addUser(data);
       } else {
-        updateUser(state, id);
+        updateUser(data, id);
       }
-      setTimeout(() => history.push("/"), 5000);
+      setTimeout(() => history("/", { replace: true }));
     }
   };
-
   const handleInputChange = (e) => {
     let { name, value } = e.target;
-    setstate({ ...state, [name]: value });
+    setData({ ...data, [name]: value });
   };
   return (
     <div style={{ marginTop: "100px" }}>
@@ -77,7 +75,7 @@ const AddEdit = () => {
           name="name"
           placeholder="enter name"
           onChange={handleInputChange}
-          value={name}
+          value={data.name}
         />
         <label htmlFor="email">email</label>
         <input
@@ -86,7 +84,7 @@ const AddEdit = () => {
           name="email"
           placeholder="enter email"
           onChange={handleInputChange}
-          value={email}
+          value={data.email}
         />
         <label htmlFor="contact">contact</label>
         <input
@@ -95,7 +93,7 @@ const AddEdit = () => {
           name="contact"
           placeholder="enter contact"
           onChange={handleInputChange}
-          value={contact}
+          value={data.contact}
         />
         <input type="submit" value={id ? "update" : "add"} />
       </form>
